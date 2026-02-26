@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <linearGradient id="g" x1="160" y1="90" x2="650" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="28" fill="#0B1220"/>
+  <rect x="96" y="86" width="608" height="278" rx="22" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+
+  <!-- App tiles (generic, no brand marks) -->
+  <g>
+    <rect x="160" y="150" width="150" height="110" rx="22" fill="url(#g)" fill-opacity="0.18" stroke="#FFFFFF" stroke-opacity="0.10"/>
+    <rect x="325" y="150" width="150" height="110" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.14"/>
+    <rect x="490" y="150" width="150" height="110" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.14"/>
+
+    <rect x="160" y="276" width="230" height="68" rx="20" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.14"/>
+    <rect x="410" y="276" width="230" height="68" rx="20" fill="url(#g)" fill-opacity="0.14" stroke="#FFFFFF" stroke-opacity="0.10"/>
+
+    <path d="M200 198h70" stroke="#FFFFFF" stroke-opacity="0.20" stroke-width="10" stroke-linecap="round"/>
+    <path d="M360 198h70" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="10" stroke-linecap="round"/>
+    <path d="M525 198h70" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

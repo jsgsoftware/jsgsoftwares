@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <linearGradient id="g" x1="150" y1="92" x2="650" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="28" fill="#0B1220"/>
+  <rect x="120" y="108" width="560" height="234" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.14"/>
+  <rect x="120" y="108" width="560" height="62" rx="22" fill="#FFFFFF" fill-opacity="0.08"/>
+
+  <!-- Rings -->
+  <rect x="190" y="92" width="22" height="54" rx="11" fill="url(#g)" fill-opacity="0.7"/>
+  <rect x="588" y="92" width="22" height="54" rx="11" fill="url(#g)" fill-opacity="0.7"/>
+
+  <!-- Grid -->
+  <g opacity="0.9">
+    <rect x="160" y="196" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="260" y="196" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="360" y="196" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="460" y="196" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+
+    <rect x="160" y="260" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="260" y="260" width="88" height="52" rx="14" fill="url(#g)" fill-opacity="0.22"/>
+    <rect x="360" y="260" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+    <rect x="460" y="260" width="88" height="52" rx="14" fill="#FFFFFF" fill-opacity="0.06"/>
+
+    <rect x="560" y="196" width="80" height="116" rx="18" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+    <path d="M578 226h44" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="10" stroke-linecap="round"/>
+    <path d="M578 258h30" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

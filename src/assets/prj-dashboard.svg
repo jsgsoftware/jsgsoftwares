@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <linearGradient id="g" x1="132" y1="92" x2="668" y2="378" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="28" fill="#0B1220"/>
+  <rect x="110" y="96" width="580" height="258" rx="22" fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.12"/>
+  <rect x="140" y="130" width="230" height="90" rx="18" fill="url(#g)" fill-opacity="0.16" stroke="#FFFFFF" stroke-opacity="0.10"/>
+  <rect x="390" y="130" width="270" height="26" rx="13" fill="#FFFFFF" fill-opacity="0.10"/>
+  <rect x="390" y="170" width="200" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.08"/>
+  <rect x="390" y="196" width="240" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.08"/>
+  <rect x="140" y="236" width="520" height="90" rx="18" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.14"/>
+  <path d="M170 304V268" stroke="url(#g)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M210 304V252" stroke="url(#g)" stroke-width="10" stroke-linecap="round" opacity="0.9"/>
+  <path d="M250 304V276" stroke="url(#g)" stroke-width="10" stroke-linecap="round" opacity="0.75"/>
+  <path d="M290 304V246" stroke="url(#g)" stroke-width="10" stroke-linecap="round" opacity="0.9"/>
+</svg>
