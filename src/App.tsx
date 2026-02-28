@@ -1,200 +1,287 @@
 import { useState, type FormEvent } from 'react'
-import heroIllustration from './assets/hero-illustration.svg'
-import prjAutomation from './assets/prj-automation.svg'
-import prjDashboard from './assets/prj-dashboard.svg'
-import prjIntegration from './assets/prj-integration.svg'
-import svcAiAgents from './assets/svc-ai-agents.svg'
-import svcApi from './assets/svc-api.svg'
-import svcAutomation from './assets/svc-automation.svg'
-import svcCalendar from './assets/svc-calendar.svg'
-import svcChatbot from './assets/svc-chatbot.svg'
-import svcMaintenance from './assets/svc-maintenance.svg'
-import svcMultiplatform from './assets/svc-multiplatform.svg'
-import svcWeb from './assets/svc-web.svg'
-import svcZoho from './assets/svc-zoho.svg'
+import { 
+  Building2,
+  RefreshCcw,
+  Shield,
+  FileCheck,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  MessageCircle,
+  Mail,
+  MapPin,
+  ChevronDown,
+  BarChart3
+} from 'lucide-react'
 import './App.css'
 
+const WHATSAPP_NUMBER = '50760634535'
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`
+const EMAIL = 'jsgsoftwares@gmail.com'
+const DEFAULT_SUBJECT = 'Cotización - JSG Softwares'
+
+const services = [
+  {
+    id: 'integracion-banco',
+    icon: Building2,
+    title: 'Integración Banco → Zoho',
+    description: 'Sincronización automática de movimientos bancarios con Zoho Creator o Books.',
+    deliverables: [
+      'Conexión API con Banco General (OAuth2)',
+      'Registro automático de transacciones',
+      'Bitácora de auditoría completa'
+    ],
+    time: '2-4 semanas'
+  },
+  {
+    id: 'automatizaciones',
+    icon: RefreshCcw,
+    title: 'Automatizaciones con n8n',
+    description: 'Flujos de trabajo programados con manejo de tokens, reintentos y cron jobs.',
+    deliverables: [
+      'Diseño de flujos personalizados',
+      'Integración con Zoho, Google Sheets, APIs',
+      'Notificaciones y alertas en tiempo real'
+    ],
+    time: '1-3 semanas'
+  },
+  {
+    id: 'apis',
+    icon: Shield,
+    title: 'APIs Seguras',
+    description: 'Desarrollo de APIs RESTful con autenticación OAuth2 y Client ID & Secret.',
+    deliverables: [
+      'APIs RESTful documentadas',
+      'Seguridad con OAuth2',
+      'Rate limiting y logs de auditoría'
+    ],
+    time: '2-5 semanas'
+  },
+  {
+    id: 'bitacora',
+    icon: FileCheck,
+    title: 'Bitácora y Auditoría',
+    description: 'Sistema de logs para rastrear operaciones y detectar duplicados.',
+    deliverables: [
+      'Registro de todas las operaciones',
+      'Detección de duplicados',
+      'Reportes para compliance'
+    ],
+    time: '1-2 semanas'
+  }
+]
+
+const processSteps = [
+  {
+    step: '01',
+    title: 'Diagnóstico',
+    description: 'Analizamos tus procesos y definimos los requisitos técnicos.'
+  },
+  {
+    step: '02',
+    title: 'Propuesta',
+    description: 'Te entregamos un alcance claro con tiempos y precio fijo.'
+  },
+  {
+    step: '03',
+    title: 'Implementación',
+    description: 'Desarrollamos la solución con actualizaciones periódicas.'
+  },
+  {
+    step: '04',
+    title: 'Validación',
+    description: 'Probamos, documentamos y entregamos soporte post-lanzamiento.'
+  }
+]
+
+const caseStudies = [
+  {
+    title: 'Integración bancaria + registro automático en Zoho',
+    type: 'Integración',
+    what: [
+      'Conexión API del banco con Zoho Creator',
+      'Sincronización automática de transacciones',
+      'Notificaciones en tiempo real'
+    ],
+    result: 'El cliente eliminó la entrada manual de datos bancarios.'
+  },
+  {
+    title: 'Automatización programada con n8n + manejo de tokens',
+    type: 'Automatización',
+    what: [
+      'Flujo automatizado con n8n (cron jobs)',
+      'Renovación automática de tokens',
+      'Reintentos automáticos en caso de error'
+    ],
+    result: 'El equipo redujo tareas manuales recurrentes.'
+  },
+  {
+    title: 'Bitácora/auditoría + control de duplicados',
+    type: 'Auditoría',
+    what: [
+      'Sistema centralizado de logs',
+      'Detección automática de duplicados',
+      'Reportes para auditoría'
+    ],
+    result: 'El cliente cumple requisitos de compliance.'
+  }
+]
+
+const faqs = [
+  {
+    question: '¿Cuánto tiempo toma una integración?',
+    answer: 'Depende de la complejidad. Una integración bancaria típica toma 2-4 semanas. Automatizaciones simples, 1-2 semanas.'
+  },
+  {
+    question: '¿Qué datos necesito del banco?',
+    answer: 'Generalmente necesitas credenciales API (Client ID, Client Secret) y acceso al entorno de pruebas. El banco debe ofrecer integración.'
+  },
+  {
+    question: '¿Es seguro usar OAuth2?',
+    answer: 'Sí, OAuth2 es el estándar de la industria para autorización. No exponemos credenciales y el acceso se puede revocar en cualquier momento.'
+  },
+  {
+    question: '¿Qué incluye el soporte post-implementación?',
+    answer: 'Correcciones de errores y ajustes dentro del alcance acordado. Soporte adicional se maneja por horas o acuerdo particular.'
+  },
+  {
+    question: '¿Necesito infraestructura propia?',
+    answer: 'No. Nosotros configuramos n8n en la nube o puedes hospearlo tú. Zoho se configura en sus servidores.'
+  },
+  {
+    question: '¿Hay costos mensuales ocultos?',
+    answer: 'No. El precio incluye desarrollo e implementación. Los costos de Zoho/n8n (si aplica) son aparte y se definen antes de empezar.'
+  }
+]
+
+function buildMailtoLink(params: { name: string; fromEmail: string; phone: string; message: string }) {
+  const lines = [
+    `Nombre: ${params.name}`,
+    `Correo: ${params.fromEmail}`,
+    `Teléfono: ${params.phone}`,
+    '',
+    'Mensaje:',
+    params.message,
+  ]
+  const body = encodeURIComponent(lines.join('\n'))
+  const subject = encodeURIComponent(DEFAULT_SUBJECT)
+  return `mailto:${EMAIL}?subject=${subject}&body=${body}`
+}
+
+function ContactForm() {
+  const [name, setName] = useState('')
+  const [fromEmail, setFromEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [message, setMessage] = useState('')
+
+  const mailto = buildMailtoLink({ name, fromEmail, phone, message })
+
+  function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    window.location.href = mailto
+  }
+
+  return (
+    <form className="form" onSubmit={onSubmit}>
+      <div className="form__grid">
+        <label className="field">
+          <span className="field__label">Nombre</span>
+          <input
+            className="field__input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            autoComplete="name"
+            required
+          />
+        </label>
+
+        <label className="field">
+          <span className="field__label">Correo</span>
+          <input
+            className="field__input"
+            type="email"
+            value={fromEmail}
+            onChange={(e) => setFromEmail(e.target.value)}
+            autoComplete="email"
+            required
+          />
+        </label>
+
+        <label className="field">
+          <span className="field__label">Teléfono</span>
+          <input
+            className="field__input"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            autoComplete="tel"
+          />
+        </label>
+
+        <label className="field field--full">
+          <span className="field__label">¿Cómo puedo ayudarte?</span>
+          <textarea
+            className="field__input field__textarea"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows={4}
+            required
+          />
+        </label>
+      </div>
+
+      <div className="form__actions">
+        <button className="btn btn--primary" type="submit">
+          Enviar solicitud
+        </button>
+        <a className="btn btn--whatsapp" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+          <MessageCircle size={18} />
+          Escribir por WhatsApp
+        </a>
+      </div>
+
+      <p className="fineprint">Tus datos son confidenciales y solo serán usados con fines comerciales.</p>
+    </form>
+  )
+}
+
+function HeroIllustration() {
+  return (
+    <div className="hero-illustration">
+      <svg viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg" className="hero-illustration__svg">
+        <rect x="20" y="60" width="100" height="70" rx="8" fill="rgba(99, 102, 241, 0.2)" stroke="rgba(99, 102, 241, 0.6)" strokeWidth="2"/>
+        <text x="70" y="100" textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="12" fontWeight="600">Banco</text>
+        
+        <rect x="150" y="60" width="100" height="70" rx="8" fill="rgba(34, 211, 238, 0.2)" stroke="rgba(34, 211, 238, 0.6)" strokeWidth="2"/>
+        <text x="200" y="100" textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="12" fontWeight="600">n8n</text>
+        
+        <rect x="280" y="60" width="100" height="70" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="rgba(16, 185, 129, 0.6)" strokeWidth="2"/>
+        <text x="330" y="100" textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="12" fontWeight="600">Zoho</text>
+        
+        <path d="M120 95 L145 95" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeDasharray="4 2"/>
+        <path d="M250 95 L275 95" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeDasharray="4 2"/>
+        
+        <rect x="50" y="170" width="300" height="80" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
+        <text x="200" y="195" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11">Bitácora / Auditoría</text>
+        
+        <rect x="70" y="205" width="80" height="30" rx="4" fill="rgba(99, 102, 241, 0.3)"/>
+        <text x="110" y="225" textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="9">Token API</text>
+        
+        <rect x="160" y="205" width="80" height="30" rx="4" fill="rgba(34, 211, 238, 0.3)"/>
+        <text x="200" y="225" textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="9">Webhook</text>
+        
+        <rect x="250" y="205" width="80" height="30" rx="4" fill="rgba(16, 185, 129, 0.3)"/>
+        <text x="290" y="225" textAnchor="middle" fill="rgba(255,255,255,0.9)" fontSize="9">Log Entry</text>
+        
+        <path d="M200 130 L200 165" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 2"/>
+        <circle cx="200" cy="130" r="4" fill="rgba(99, 102, 241, 0.8)"/>
+        <circle cx="200" cy="165" r="4" fill="rgba(16, 185, 129, 0.8)"/>
+      </svg>
+    </div>
+  )
+}
+
 function App() {
-  const email = 'jsgsoftwares@gmail.com'
-  const whatsappNumber = '50760634535'
-  const whatsappLink = `https://wa.me/${whatsappNumber}`
-  const defaultSubject = 'Cotización - JSG Softwares'
-
-  const services = [
-    {
-      title: 'APIs e integraciones',
-      text: 'Integración entre plataformas con webhooks, endpoints y sincronizaciones seguras.',
-      imageSrc: svcApi,
-      imageAlt: 'Ilustración de integración de API',
-    },
-    {
-      title: 'Desarrollo web',
-      text: 'Sitios y apps web modernas para ventas, operaciones y atención al cliente.',
-      imageSrc: svcWeb,
-      imageAlt: 'Ilustración de una aplicación web',
-    },
-    {
-      title: 'Automatizaciones (n8n)',
-      text: 'Automatizaciones con n8n: flujos, integraciones y orquestación de procesos.',
-      imageSrc: svcAutomation,
-      imageAlt: 'Ilustración de automatización de procesos',
-    },
-    {
-      title: 'Chatbots',
-      text: 'Chatbots para soporte y ventas: captura de leads, FAQ y seguimiento.',
-      imageSrc: svcChatbot,
-      imageAlt: 'Ilustración de un chatbot',
-    },
-    {
-      title: 'Agentes IA',
-      text: 'Agentes IA para atención, soporte interno y automatización asistida por lenguaje natural.',
-      imageSrc: svcAiAgents,
-      imageAlt: 'Ilustración de agentes de inteligencia artificial',
-    },
-    {
-      title: 'Zoho (CRM/Creator/Flow)',
-      text: 'Desarrollos, personalizaciones e integraciones en el ecosistema Zoho.',
-      imageSrc: svcZoho,
-      imageAlt: 'Ilustración de módulos de sistema',
-    },
-    {
-      title: 'Venta de software multiplataforma',
-      text: 'Soluciones listas para usar (web/móvil) adaptables a tu operación y con soporte.',
-      imageSrc: svcMultiplatform,
-      imageAlt: 'Ilustración de software multiplataforma',
-    },
-    {
-      title: 'Software de calendario',
-      text: 'Agenda y reservas: calendario, recordatorios, confirmaciones y control de disponibilidad.',
-      imageSrc: svcCalendar,
-      imageAlt: 'Ilustración de calendario',
-    },
-    {
-      title: 'Desarrollo a la medida',
-      text: 'Sistemas personalizados para optimizar procesos y mejorar productividad.',
-      imageSrc: prjDashboard,
-      imageAlt: 'Ilustración de un dashboard',
-    },
-    {
-      title: 'Mantenimiento y soporte',
-      text: 'Mejoras, correcciones y evolución continua de tus sistemas.',
-      imageSrc: svcMaintenance,
-      imageAlt: 'Ilustración de mantenimiento y soporte',
-    },
-  ]
-
-  const portfolio = [
-    {
-      title: 'Integración entre sistemas',
-      text: 'Conecta herramientas y centraliza datos con integraciones seguras.',
-      imageSrc: prjIntegration,
-      imageAlt: 'Diagrama de integración',
-    },
-    {
-      title: 'Automatización de procesos',
-      text: 'Reduce tiempos operativos automatizando tareas clave con n8n.',
-      imageSrc: prjAutomation,
-      imageAlt: 'Flujo de automatización',
-    },
-    {
-      title: 'Panel web + API',
-      text: 'Aplicación web con back-end para control, reportes y operaciones.',
-      imageSrc: prjDashboard,
-      imageAlt: 'Dashboard web',
-    },
-  ]
-
-  const featuredClients = ['Olacars Panamá']
-  const sectors = ['Retail', 'Logística', 'Servicios', 'Educación', 'Finanzas', 'Salud']
-
-  function buildMailtoLink(params: { name: string; fromEmail: string; phone: string; message: string }) {
-    const lines = [
-      `Nombre: ${params.name}`,
-      `Correo: ${params.fromEmail}`,
-      `Teléfono: ${params.phone}`,
-      '',
-      'Mensaje:',
-      params.message,
-    ]
-    const body = encodeURIComponent(lines.join('\n'))
-    const subject = encodeURIComponent(defaultSubject)
-    return `mailto:${email}?subject=${subject}&body=${body}`
-  }
-
-  function ContactForm() {
-    const [name, setName] = useState('')
-    const [fromEmail, setFromEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [message, setMessage] = useState('')
-
-    const mailto = buildMailtoLink({ name, fromEmail, phone, message })
-
-    function onSubmit(e: FormEvent) {
-      e.preventDefault()
-      window.location.href = mailto
-    }
-
-    return (
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form__grid">
-          <label className="field">
-            <span className="field__label">Nombre</span>
-            <input
-              className="field__input"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              autoComplete="name"
-              required
-            />
-          </label>
-
-          <label className="field">
-            <span className="field__label">Correo</span>
-            <input
-              className="field__input"
-              type="email"
-              value={fromEmail}
-              onChange={(e) => setFromEmail(e.target.value)}
-              autoComplete="email"
-              required
-            />
-          </label>
-
-          <label className="field">
-            <span className="field__label">Teléfono</span>
-            <input
-              className="field__input"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              autoComplete="tel"
-            />
-          </label>
-
-          <label className="field field--full">
-            <span className="field__label">¿Cómo puedo ayudarte?</span>
-            <textarea
-              className="field__input field__textarea"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={5}
-              required
-            />
-          </label>
-        </div>
-
-        <div className="form__actions">
-          <button className="btn" type="submit">
-            Enviar solicitud
-          </button>
-          <a className="btn btn--ghost" href={whatsappLink} target="_blank" rel="noreferrer">
-            Escribir por WhatsApp
-          </a>
-        </div>
-
-        <p className="fineprint">Tus datos son confidenciales y solo serán usados con fines comerciales.</p>
-      </form>
-    )
-  }
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
     <div className="page">
@@ -206,30 +293,21 @@ function App() {
             </div>
             <div className="brand__text">
               <div className="brand__name">JSG Softwares</div>
-              <div className="brand__tag">Desarrollo de software</div>
+              <div className="brand__tag">Integraciones & Automatización</div>
             </div>
           </div>
 
           <nav className="nav" aria-label="Navegación">
-            <a className="nav__link" href="#servicios">
-              Servicios
-            </a>
-            <a className="nav__link" href="#clientes">
-              Clientes
-            </a>
-            <a className="nav__link" href="#portafolio">
-              Portafolio
-            </a>
-            <a className="nav__link" href="#contacto">
-              Contacto
-            </a>
+            <a className="nav__link" href="#servicios">Servicios</a>
+            <a className="nav__link" href="#proceso">Proceso</a>
+            <a className="nav__link" href="#casos">Casos</a>
+            <a className="nav__link" href="#faq">FAQ</a>
+            <a className="nav__link" href="#contacto">Contacto</a>
           </nav>
 
           <div className="header__cta">
-            <a className="btn btn--ghost" href={`mailto:${email}?subject=${encodeURIComponent(defaultSubject)}`}>
-              Cotizar por correo
-            </a>
-            <a className="btn" href={whatsappLink} target="_blank" rel="noreferrer">
+            <a className="btn btn--whatsapp-sm" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+              <MessageCircle size={16} />
               WhatsApp
             </a>
           </div>
@@ -237,75 +315,155 @@ function App() {
       </header>
 
       <main>
-        <section className="hero hero--cover" aria-label="Presentación">
-          <div className="hero__backdrop" aria-hidden="true" />
+        <section className="hero" aria-label="Presentación">
+          <div className="hero__bg" aria-hidden="true" />
           <div className="container hero__inner">
-            <div className="hero__copy">
-              <div className="hero__kicker">Soluciones de Software Personalizadas</div>
-              <h1 className="hero__title">Desarrollo de software a la medida para tu empresa.</h1>
-              <p className="hero__lead">
-                APIs, aplicaciones web, software multiplataforma, chatbots, agentes IA y automatizaciones con n8n. Zoho e
-                integraciones para optimizar procesos y mejorar la productividad.
+            <div className="hero__content">
+              <div className="hero__badge">
+                <span className="hero__badge-dot" />
+                Disponible en Panamá
+              </div>
+              
+              <h1 className="hero__title">
+                Conecta tus sistemas.<br />
+                <span className="hero__title-accent">Automatiza todo lo demás.</span>
+              </h1>
+              
+              <p className="hero__description">
+                Desarrollamos integraciones con Zoho, automatizaciones con n8n y APIs seguras. 
+                Olvídate de la entrada manual de datos.
               </p>
-              <div className="hero__actions">
-                <a className="btn" href={whatsappLink} target="_blank" rel="noreferrer">
-                  Solicita una asesoría
+              
+              <div className="hero__features">
+                <div className="hero__feature">
+                  <CheckCircle2 size={18} className="hero__feature-icon" />
+                  <span>Integración Banco General → Zoho</span>
+                </div>
+                <div className="hero__feature">
+                  <CheckCircle2 size={18} className="hero__feature-icon" />
+                  <span>Automatizaciones con n8n (cron, tokens, reintentos)</span>
+                </div>
+                <div className="hero__feature">
+                  <CheckCircle2 size={18} className="hero__feature-icon" />
+                  <span>APIs seguras (OAuth2, Client ID & Secret)</span>
+                </div>
+              </div>
+
+              <div className="hero__ctas">
+                <a className="btn btn--whatsapp-lg" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+                  <MessageCircle size={20} />
+                  Escribir por WhatsApp
                 </a>
-                <a className="btn btn--ghost" href={`mailto:${email}?subject=${encodeURIComponent(defaultSubject)}`}>
-                  Cotizar por correo
+                <a className="btn btn--outline" href={`mailto:${EMAIL}?subject=${encodeURIComponent(DEFAULT_SUBJECT)}`}>
+                  <Mail size={18} />
+                  o por correo
                 </a>
               </div>
 
-              <div className="hero__meta">
-                <div className="pill">
-                  <span className="pill__k">Correo:</span>
-                  <a className="pill__v" href={`mailto:${email}`}>
-                    {email}
-                  </a>
-                </div>
-                <div className="pill">
-                  <span className="pill__k">WhatsApp:</span>
-                  <a className="pill__v" href={whatsappLink} target="_blank" rel="noreferrer">
-                    +{whatsappNumber}
-                  </a>
-                </div>
+              <div className="hero__contact">
+                <span className="hero__contact-label">Ciudad de Panamá, Panamá</span>
               </div>
             </div>
 
-            <div className="hero__panel" aria-hidden="true">
-              <div className="panel panel--glass">
-                <img className="panel__img" src={heroIllustration} alt="Ilustración de tecnología" loading="lazy" />
-                <div className="panel__title">Servicios principales</div>
-                <ul className="panel__list">
-                  <li>APIs e integraciones</li>
-                  <li>Desarrollo web</li>
-                  <li>Software multiplataforma</li>
-                  <li>Automatizaciones (n8n)</li>
-                  <li>Chatbots</li>
-                  <li>Agentes IA</li>
-                  <li>Zoho (CRM/Creator/Flow)</li>
-                  <li>Software de calendario</li>
-                  <li>Mantenimiento</li>
-                </ul>
-              </div>
+            <div className="hero__visual">
+              <HeroIllustration />
+            </div>
+          </div>
+        </section>
+
+        <section className="section section--py-sm" aria-label="Clientes">
+          <div className="container">
+            <p className="trust__text">Empresas que han trabajado con nosotros</p>
+            <div className="trust__logos">
+              <div className="trust__logo">Olacars Panamá</div>
             </div>
           </div>
         </section>
 
         <section id="servicios" className="section" aria-label="Servicios">
           <div className="container">
-            <h2 className="section__title">Servicios</h2>
-            <p className="section__subtitle">Digitalización, desarrollo y automatización para tu operación.</p>
+            <div className="section-header">
+              <h2 className="section-header__title">Lo que hacemos</h2>
+              <p className="section-header__subtitle">
+                Soluciones técnicas especializadas en integración, automatización y auditoría.
+              </p>
+            </div>
 
-            <div className="grid grid--services">
-              {services.map((s) => (
-                <article key={s.title} className="card card--media">
-                  <div className="media">
-                    <img className="media__img" src={s.imageSrc} alt={s.imageAlt} loading="lazy" />
-                  </div>
-                  <div className="card__body">
-                    <h3 className="card__title">{s.title}</h3>
-                    <p className="card__text">{s.text}</p>
+            <div className="services-grid">
+              {services.map((service) => {
+                const Icon = service.icon
+                return (
+                  <article key={service.id} className="service-card">
+                    <div className="service-card__icon">
+                      <Icon size={24} />
+                    </div>
+                    <h3 className="service-card__title">{service.title}</h3>
+                    <p className="service-card__description">{service.description}</p>
+                    <ul className="service-card__list">
+                      {service.deliverables.map((item) => (
+                        <li key={item}>
+                          <CheckCircle2 size={14} />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="service-card__footer">
+                      <Clock size={14} />
+                      <span>{service.time}</span>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="proceso" className="section section--alt" aria-label="Proceso">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-header__title">Cómo trabajamos</h2>
+              <p className="section-header__subtitle">
+                Un proceso claro, sin sorpresas.
+              </p>
+            </div>
+
+            <div className="process-grid">
+              {processSteps.map((step, idx) => (
+                <div key={step.step} className="process-card">
+                  <div className="process-card__step">{step.step}</div>
+                  <h3 className="process-card__title">{step.title}</h3>
+                  <p className="process-card__description">{step.description}</p>
+                  {idx < processSteps.length - 1 && (
+                    <ArrowRight className="process-card__arrow" size={20} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="casos" className="section" aria-label="Casos de éxito">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-header__title">Casos de éxito</h2>
+              <p className="section-header__subtitle">
+                Proyectos que hemos resuelto. Contactános para ver detalles.
+              </p>
+            </div>
+
+            <div className="cases-grid">
+              {caseStudies.map((study, idx) => (
+                <article key={idx} className="case-card">
+                  <div className="case-card__tag">{study.type}</div>
+                  <h3 className="case-card__title">{study.title}</h3>
+                  <ul className="case-card__list">
+                    {study.what.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                  <div className="case-card__result">
+                    <BarChart3 size={16} />
+                    <span>{study.result}</span>
                   </div>
                 </article>
               ))}
@@ -313,95 +471,63 @@ function App() {
           </div>
         </section>
 
-        <section id="clientes" className="section section--alt" aria-label="Clientes">
+        <section id="faq" className="section section--alt" aria-label="Preguntas frecuentes">
           <div className="container">
-            <h2 className="section__title">Clientes</h2>
-            <p className="section__subtitle">Algunos proyectos realizados y experiencia por rubro.</p>
-
-            <div className="logos" role="list" aria-label="Clientes">
-              {featuredClients.map((c) => (
-                <div key={c} className="logoChip logoChip--primary" role="listitem">
-                  {c}
-                </div>
-              ))}
+            <div className="section-header">
+              <h2 className="section-header__title">Preguntas frecuentes</h2>
             </div>
 
-            <div className="logos logos--secondary" role="list" aria-label="Sectores">
-              {sectors.map((c) => (
-                <div key={c} className="logoChip" role="listitem">
-                  {c}
+            <div className="faq-list">
+              {faqs.map((faq, idx) => (
+                <div 
+                  key={idx} 
+                  className={`faq-item ${openFaq === idx ? 'faq-item--open' : ''}`}
+                >
+                  <button 
+                    className="faq-item__trigger"
+                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                    aria-expanded={openFaq === idx}
+                  >
+                    <span>{faq.question}</span>
+                    <ChevronDown size={20} className="faq-item__icon" />
+                  </button>
+                  <div className="faq-item__content">
+                    <p>{faq.answer}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="portafolio" className="section" aria-label="Portafolio">
+        <section id="contacto" className="section section--cta" aria-label="Contacto">
           <div className="container">
-            <div className="section__head">
-              <div>
-                <h2 className="section__title">Portafolio</h2>
-                <p className="section__subtitle">Ejemplos de soluciones que puedo construir para tu operación.</p>
-              </div>
-              <div className="section__headActions">
-                <a className="btn btn--ghost" href="#contacto">
-                  Ver más / Cotizar
-                </a>
-              </div>
-            </div>
-
-            <div className="grid grid--portfolio">
-              {portfolio.map((p) => (
-                <article key={p.title} className="card card--media">
-                  <div className="media">
-                    <img className="media__img" src={p.imageSrc} alt={p.imageAlt} loading="lazy" />
+            <div className="cta-box">
+              <div className="cta-box__content">
+                <h2 className="cta-box__title">¿Hablamos de tu proyecto?</h2>
+                <p className="cta-box__text">
+                  Cuéntanos qué necesitas y te proponemos una solución.
+                </p>
+                
+                <div className="cta-box__contacts">
+                  <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="cta-box__contact">
+                    <MessageCircle size={20} />
+                    <span>+507 6063-4535</span>
+                  </a>
+                  <a href={`mailto:${EMAIL}`} className="cta-box__contact">
+                    <Mail size={20} />
+                    <span>{EMAIL}</span>
+                  </a>
+                  <div className="cta-box__contact">
+                    <MapPin size={20} />
+                    <span>Ciudad de Panamá, Panamá</span>
                   </div>
-                  <div className="card__body">
-                    <h3 className="card__title">{p.title}</h3>
-                    <p className="card__text">{p.text}</p>
-                  </div>
-                </article>
-              ))}
-              <article className="card card--cta">
-                <h3 className="card__title">¿Tienes un proyecto en mente?</h3>
-                <p className="card__text">Escríbeme y armamos el alcance para cotizar con claridad.</p>
-                <div className="card__actions">
-                  <a className="btn btn--small" href={whatsappLink} target="_blank" rel="noreferrer">
-                    WhatsApp
-                  </a>
-                  <a className="btn btn--ghost btn--small" href={`mailto:${email}?subject=${encodeURIComponent(defaultSubject)}`}>
-                    Correo
-                  </a>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="contacto" className="section section--alt" aria-label="Contacto">
-          <div className="container contact">
-            <div>
-              <h2 className="section__title">Contacto</h2>
-              <p className="section__subtitle">Completa el formulario o contáctame directo:</p>
-
-              <div className="contact__rows">
-                <div className="contact__row">
-                  <div className="contact__label">Correo</div>
-                  <a className="contact__value" href={`mailto:${email}`}>
-                    {email}
-                  </a>
-                </div>
-                <div className="contact__row">
-                  <div className="contact__label">WhatsApp</div>
-                  <a className="contact__value" href={whatsappLink} target="_blank" rel="noreferrer">
-                    +{whatsappNumber}
-                  </a>
                 </div>
               </div>
-            </div>
 
-            <div className="contact__actions">
-              <ContactForm />
+              <div className="cta-box__form">
+                <ContactForm />
+              </div>
             </div>
           </div>
         </section>
@@ -409,15 +535,15 @@ function App() {
 
       <footer className="footer">
         <div className="container footer__inner">
-          <div className="footer__left">© {new Date().getFullYear()} JSG Softwares</div>
+          <div className="footer__left">
+            <span className="footer__brand">JSG Softwares</span>
+            <span className="footer__sep">·</span>
+            <span>Integraciones & Automatización</span>
+          </div>
           <div className="footer__right">
-            <a href={`mailto:${email}`}>{email}</a>
-            <span className="footer__sep" aria-hidden="true">
-              ·
-            </span>
-            <a href={whatsappLink} target="_blank" rel="noreferrer">
-              WhatsApp
-            </a>
+            <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">WhatsApp</a>
+            <span className="footer__sep">·</span>
+            <a href={`mailto:${EMAIL}`}>Email</a>
           </div>
         </div>
       </footer>
