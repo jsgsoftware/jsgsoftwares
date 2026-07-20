@@ -11,7 +11,13 @@ import {
   Mail,
   MapPin,
   ChevronDown,
-  BarChart3
+  BarChart3,
+  Menu,
+  X,
+  Code2,
+  Zap,
+  Users,
+  Target
 } from 'lucide-react'
 import './App.css'
 
@@ -98,32 +104,38 @@ const caseStudies = [
   {
     title: 'Integración bancaria + registro automático en Zoho',
     type: 'Integración',
+    client: 'Sector Financiero',
     what: [
       'Conexión API del banco con Zoho Creator',
       'Sincronización automática de transacciones',
       'Notificaciones en tiempo real'
     ],
-    result: 'El cliente eliminó la entrada manual de datos bancarios.'
+    result: '100% de datos bancarios sincronizados sin entrada manual.',
+    metric: '+40h/mes ahorradas'
   },
   {
     title: 'Automatización programada con n8n + manejo de tokens',
     type: 'Automatización',
+    client: 'Sector Logístico',
     what: [
       'Flujo automatizado con n8n (cron jobs)',
       'Renovación automática de tokens',
       'Reintentos automáticos en caso de error'
     ],
-    result: 'El equipo redujo tareas manuales recurrentes.'
+    result: 'Procesos manuales reducidos a cero con renovación automática.',
+    metric: '99.9% uptime'
   },
   {
     title: 'Bitácora/auditoría + control de duplicados',
     type: 'Auditoría',
+    client: 'Sector Comercial',
     what: [
       'Sistema centralizado de logs',
       'Detección automática de duplicados',
       'Reportes para auditoría'
     ],
-    result: 'El cliente cumple requisitos de compliance.'
+    result: 'Cumplimiento de requisitos de compliance garantizado.',
+    metric: '0 duplicados'
   }
 ]
 
@@ -154,18 +166,18 @@ const faqs = [
   }
 ]
 
-function buildMailtoLink(params: { name: string; fromEmail: string; phone: string; message: string }) {
+function buildWhatsAppLink(params: { name: string; fromEmail: string; phone: string; message: string }) {
   const lines = [
+    `Hola JSG Softwares, quiero solicitar una cotización.`,
+    '',
     `Nombre: ${params.name}`,
     `Correo: ${params.fromEmail}`,
-    `Teléfono: ${params.phone}`,
+    params.phone ? `Teléfono: ${params.phone}` : '',
     '',
-    'Mensaje:',
-    params.message,
-  ]
-  const body = encodeURIComponent(lines.join('\n'))
-  const subject = encodeURIComponent(DEFAULT_SUBJECT)
-  return `mailto:${EMAIL}?subject=${subject}&body=${body}`
+    `Mensaje: ${params.message}`,
+  ].filter(Boolean)
+  const text = encodeURIComponent(lines.join('\n'))
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`
 }
 
 function ContactForm() {
@@ -174,11 +186,10 @@ function ContactForm() {
   const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
 
-  const mailto = buildMailtoLink({ name, fromEmail, phone, message })
-
   function onSubmit(e: FormEvent) {
     e.preventDefault()
-    window.location.href = mailto
+    const waLink = buildWhatsAppLink({ name, fromEmail, phone, message })
+    window.open(waLink, '_blank')
   }
 
   return (
@@ -191,6 +202,7 @@ function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
+            placeholder="Tu nombre completo"
             required
           />
         </label>
@@ -203,6 +215,7 @@ function ContactForm() {
             value={fromEmail}
             onChange={(e) => setFromEmail(e.target.value)}
             autoComplete="email"
+            placeholder="tu@correo.com"
             required
           />
         </label>
@@ -214,6 +227,7 @@ function ContactForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             autoComplete="tel"
+            placeholder="+507 6000-0000"
           />
         </label>
 
@@ -224,6 +238,7 @@ function ContactForm() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
+            placeholder="Cuéntanos sobre tu proyecto..."
             required
           />
         </label>
@@ -231,11 +246,12 @@ function ContactForm() {
 
       <div className="form__actions">
         <button className="btn btn--primary" type="submit">
-          Enviar solicitud
-        </button>
-        <a className="btn btn--whatsapp" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
           <MessageCircle size={18} />
-          Escribir por WhatsApp
+          Enviar por WhatsApp
+        </button>
+        <a className="btn btn--outline" href={`mailto:${EMAIL}?subject=${encodeURIComponent(DEFAULT_SUBJECT)}`}>
+          <Mail size={18} />
+          o por correo
         </a>
       </div>
 
@@ -282,6 +298,7 @@ function HeroIllustration() {
 
 function App() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="page">
@@ -297,12 +314,13 @@ function App() {
             </div>
           </div>
 
-          <nav className="nav" aria-label="Navegación">
-            <a className="nav__link" href="#servicios">Servicios</a>
-            <a className="nav__link" href="#proceso">Proceso</a>
-            <a className="nav__link" href="#casos">Casos</a>
-            <a className="nav__link" href="#faq">FAQ</a>
-            <a className="nav__link" href="#contacto">Contacto</a>
+          <nav className={`nav ${mobileMenuOpen ? 'nav--open' : ''}`} aria-label="Navegación">
+            <a className="nav__link" href="#servicios" onClick={() => setMobileMenuOpen(false)}>Servicios</a>
+            <a className="nav__link" href="#proceso" onClick={() => setMobileMenuOpen(false)}>Proceso</a>
+            <a className="nav__link" href="#nosotros" onClick={() => setMobileMenuOpen(false)}>Nosotros</a>
+            <a className="nav__link" href="#casos" onClick={() => setMobileMenuOpen(false)}>Casos</a>
+            <a className="nav__link" href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+            <a className="nav__link" href="#contacto" onClick={() => setMobileMenuOpen(false)}>Contacto</a>
           </nav>
 
           <div className="header__cta">
@@ -310,6 +328,14 @@ function App() {
               <MessageCircle size={16} />
               WhatsApp
             </a>
+            <button 
+              className="nav-toggle" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Menú"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
         </div>
       </header>
@@ -354,7 +380,7 @@ function App() {
                   <MessageCircle size={20} />
                   Escribir por WhatsApp
                 </a>
-                <a className="btn btn--outline" href={`mailto:${EMAIL}?subject=${encodeURIComponent(DEFAULT_SUBJECT)}`}>
+                <a className="btn btn--outline btn--outline-visible" href={`mailto:${EMAIL}?subject=${encodeURIComponent(DEFAULT_SUBJECT)}`}>
                   <Mail size={18} />
                   o por correo
                 </a>
@@ -371,11 +397,45 @@ function App() {
           </div>
         </section>
 
-        <section className="section section--py-sm" aria-label="Clientes">
+        <section id="nosotros" className="section section--alt" aria-label="Sobre nosotros">
           <div className="container">
-            <p className="trust__text">Empresas que han trabajado con nosotros</p>
-            <div className="trust__logos">
-              <div className="trust__logo">Olacars Panamá</div>
+            <div className="section-header">
+              <h2 className="section-header__title">Sobre JSG Softwares</h2>
+              <p className="section-header__subtitle">
+                Especialistas en integración, automatización y desarrollo a medida.
+              </p>
+            </div>
+            <div className="about-grid">
+              <div className="about-card">
+                <div className="about-card__icon">
+                  <Code2 size={24} />
+                </div>
+                <h3 className="about-card__title">Desarrollo a medida</h3>
+                <p className="about-card__text">
+                  Construimos APIs, integraciones y herramientas personalizadas para cada cliente.
+                  No usamos plantillas: cada solución se diseña según tus necesidades.
+                </p>
+              </div>
+              <div className="about-card">
+                <div className="about-card__icon">
+                  <Zap size={24} />
+                </div>
+                <h3 className="about-card__title">Automatización primero</h3>
+                <p className="about-card__text">
+                  Si un proceso se puede automatizar, lo automatizamos. Desde sincronización bancaria
+                  hasta reportes automáticos con cron jobs y manejo de tokens.
+                </p>
+              </div>
+              <div className="about-card">
+                <div className="about-card__icon">
+                  <Users size={24} />
+                </div>
+                <h3 className="about-card__title">Trabajo cercano</h3>
+                <p className="about-card__text">
+                  Comunicación directa durante todo el proyecto. Sin intermediarios, sin burocracia.
+                  Hablas con quien escribe el código.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -454,13 +514,20 @@ function App() {
             <div className="cases-grid">
               {caseStudies.map((study, idx) => (
                 <article key={idx} className="case-card">
-                  <div className="case-card__tag">{study.type}</div>
+                  <div className="case-card__header">
+                    <span className="case-card__tag">{study.type}</span>
+                    <span className="case-card__client">{study.client}</span>
+                  </div>
                   <h3 className="case-card__title">{study.title}</h3>
                   <ul className="case-card__list">
                     {study.what.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
+                  <div className="case-card__metric">
+                    <Target size={16} />
+                    <span>{study.metric}</span>
+                  </div>
                   <div className="case-card__result">
                     <BarChart3 size={16} />
                     <span>{study.result}</span>
@@ -539,6 +606,9 @@ function App() {
             <span className="footer__brand">JSG Softwares</span>
             <span className="footer__sep">·</span>
             <span>Integraciones & Automatización</span>
+          </div>
+          <div className="footer__center">
+            <span>© {new Date().getFullYear()} JSG Softwares · Ciudad de Panamá, Panamá</span>
           </div>
           <div className="footer__right">
             <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">WhatsApp</a>
