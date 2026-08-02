@@ -54,14 +54,26 @@ const services = [
   {
     id: 'odoo',
     icon: Building2,
-    title: 'Implementación de Odoo + Factura Fiscal',
-    description: 'Implementamos Odoo a medida con facturación fiscal electrónica conforme a normativa panameña.',
+    title: 'Implementación de Odoo',
+    description: 'Implementamos Odoo a medida con los módulos que tu negocio necesita.',
     deliverables: [
-      'Configuración de módulos de Odoo (Ventas, Inventario, Contabilidad)',
-      'Factura fiscal electrónica (DGII)',
-      'Integración con bancos y contabilidad'
+      'Configuración de módulos (Ventas, Inventario, Contabilidad, CRM)',
+      'Personalización de flujos y reportes',
+      'Integración con sistemas existentes'
     ],
     time: '3-8 semanas'
+  },
+  {
+    id: 'factura-fiscal',
+    icon: FileCheck,
+    title: 'Módulo de Facturación Fiscal Electrónica',
+    description: 'Módulo de facturación fiscal electrónica para Odoo, conforme a normativa panameña (DGII). Compatible con implementaciones existentes.',
+    deliverables: [
+      'Factura electrónica conforme a DGII Panamá',
+      'Integración con Odoo (instalación nueva o existente)',
+      'Generación de PDF y XML automáticos'
+    ],
+    time: '2-4 semanas'
   },
   {
     id: 'mensajeria',
@@ -138,12 +150,12 @@ const caseStudies = [
     metric: '+40h/mes ahorradas'
   },
   {
-    title: 'Implementación de Odoo + Factura Fiscal Electrónica',
+    title: 'Implementación de Odoo + módulo de facturación fiscal',
     type: 'Odoo',
     client: 'Sector Comercial',
     what: [
-      'Configuración de Odoo (Ventas, Inventario, Contabilidad)',
-      'Facturación fiscal electrónica conforme a DGII',
+      'Implementación de Odoo con módulos personalizados',
+      'Módulo de facturación fiscal electrónica (DGII)',
       'Integración con sistema bancario'
     ],
     result: 'Facturación electrónica 100% compliant con normativa panameña.',
