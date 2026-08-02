@@ -67,25 +67,13 @@ const services = [
     id: 'mensajeria',
     icon: MessageCircle,
     title: 'Sistema de Mensajería Multiplataforma',
-    description: 'Centraliza WhatsApp, Instagram, Facebook y web chat en un solo panel para tu equipo.',
+    description: 'Plataforma multiusuario que centraliza WhatsApp, Instagram, Facebook y web chat en un solo panel para tu equipo.',
     deliverables: [
       'Unifica WhatsApp, Instagram, Facebook y web en un panel',
-      'Gestión de conversaciones con multiples agentes',
+      'Múltiples agentes con roles y permisos',
       'Respuestas automáticas y chatbots inteligentes'
     ],
     time: '1-3 semanas'
-  },
-  {
-    id: 'usuarios',
-    icon: Users,
-    title: 'Gestión de Usuarios para tu Negocio',
-    description: 'Sistema de autenticación, roles y permisos para tus clientes y equipo de trabajo.',
-    deliverables: [
-      'Login y registro con autenticación segura',
-      'Roles y permisos personalizados',
-      'Panel de administración de usuarios'
-    ],
-    time: '1-2 semanas'
   },
   {
     id: 'apis',
