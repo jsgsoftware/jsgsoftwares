@@ -52,6 +52,42 @@ const services = [
     time: '1-3 semanas'
   },
   {
+    id: 'odoo',
+    icon: Building2,
+    title: 'Implementación de Odoo + Factura Fiscal',
+    description: 'Implementamos Odoo a medida con facturación fiscal electrónica conforme a normativa panameña.',
+    deliverables: [
+      'Configuración de módulos de Odoo (Ventas, Inventario, Contabilidad)',
+      'Factura fiscal electrónica (DGII)',
+      'Integración con bancos y contabilidad'
+    ],
+    time: '3-8 semanas'
+  },
+  {
+    id: 'mensajeria',
+    icon: MessageCircle,
+    title: 'Sistema de Mensajería Multiplataforma',
+    description: 'Centraliza WhatsApp, Instagram, Facebook y web chat en un solo panel para tu equipo.',
+    deliverables: [
+      'Unifica WhatsApp, Instagram, Facebook y web en un panel',
+      'Gestión de conversaciones con multiples agentes',
+      'Respuestas automáticas y chatbots inteligentes'
+    ],
+    time: '1-3 semanas'
+  },
+  {
+    id: 'usuarios',
+    icon: Users,
+    title: 'Gestión de Usuarios para tu Negocio',
+    description: 'Sistema de autenticación, roles y permisos para tus clientes y equipo de trabajo.',
+    deliverables: [
+      'Login y registro con autenticación segura',
+      'Roles y permisos personalizados',
+      'Panel de administración de usuarios'
+    ],
+    time: '1-2 semanas'
+  },
+  {
     id: 'apis',
     icon: Shield,
     title: 'APIs Seguras',
@@ -112,6 +148,30 @@ const caseStudies = [
     ],
     result: '100% de datos bancarios sincronizados sin entrada manual.',
     metric: '+40h/mes ahorradas'
+  },
+  {
+    title: 'Implementación de Odoo + Factura Fiscal Electrónica',
+    type: 'Odoo',
+    client: 'Sector Comercial',
+    what: [
+      'Configuración de Odoo (Ventas, Inventario, Contabilidad)',
+      'Facturación fiscal electrónica conforme a DGII',
+      'Integración con sistema bancario'
+    ],
+    result: 'Facturación electrónica 100% compliant con normativa panameña.',
+    metric: '100% fiscal'
+  },
+  {
+    title: 'Sistema de mensajería multiplataforma para soporte',
+    type: 'Mensajería',
+    client: 'Sector Servicios',
+    what: [
+      'Unificación de WhatsApp, Instagram y web chat',
+      'Gestión con múltiples agentes',
+      'Respuestas automáticas y chatbots'
+    ],
+    result: 'Tiempo de respuesta reducido de horas a minutos.',
+    metric: '-90% tiempo respuesta'
   },
   {
     title: 'Automatización programada con n8n + manejo de tokens',
