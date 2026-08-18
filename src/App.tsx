@@ -28,6 +28,18 @@ const DEFAULT_SUBJECT = 'Cotización - JSG Softwares'
 
 const services = [
   {
+    id: 'yappy',
+    icon: RefreshCcw,
+    title: 'Integración con Yappy (Banco General)',
+    description: 'Implementamos pagos con Yappy en tu sitio web, app o sistema. Sincronización automática de pagos con tu backend.',
+    deliverables: [
+      'Botón de pago Yappy en tu sitio web o app',
+      'Webhook para confirmación automática de pagos',
+      'Dashboard de transacciones con estados en tiempo real'
+    ],
+    time: '1-2 semanas'
+  },
+  {
     id: 'integracion-banco',
     icon: Building2,
     title: 'Integración Banco → Zoho',
@@ -137,6 +149,18 @@ const processSteps = [
 ]
 
 const caseStudies = [
+  {
+    title: 'Integración Yappy en plataforma de streaming (StreamVision)',
+    type: 'Yappy',
+    client: 'Sector Entretenimiento',
+    what: [
+      'Botón de pago Yappy en sitio web',
+      'Webhook para confirmación automática',
+      'Dashboard de transacciones en tiempo real'
+    ],
+    result: 'Pagos instantáneos con confirmación automática y cero retrasos.',
+    metric: '0% errores'
+  },
   {
     title: 'Integración bancaria + registro automático en Zoho',
     type: 'Integración',
