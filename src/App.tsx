@@ -1,10 +1,11 @@
 import {useState,type FormEvent} from'react'
 import {ArrowRight,Check,ChevronDown,Mail,MapPin,Menu,MessageCircle,Phone,X} from'lucide-react'
-import hero from'./assets/hero-illustration.svg'
-import api from'./assets/svc-api.svg'
-import automation from'./assets/svc-automation.svg'
-import zoho from'./assets/svc-zoho.svg'
-import web from'./assets/svc-web.svg'
+import hero from'./assets/photos/hero-consulting.jpg'
+import api from'./assets/photos/service-integrations.jpg'
+import automation from'./assets/photos/service-automation.jpg'
+import zoho from'./assets/photos/service-erp.jpg'
+import web from'./assets/photos/service-development.jpg'
+import discovery from'./assets/photos/why-discovery.jpg'
 import'./App.css'
 
 const PHONE='50760634535',WA=`https://wa.me/${PHONE}`,EMAIL='jsgsoftwares@gmail.com'
@@ -35,7 +36,7 @@ export default function App(){const[menu,setMenu]=useState(false),[faq,setFaq]=u
 
     <section id="servicios" className="section servicesSection"><div className="container"><div className="sectionTitle"><span className="eyebrow">NUESTROS SERVICIOS</span><h2>Soluciones para transformar tu operación</h2><p>Desde una integración puntual hasta un sistema completo.</p></div><div className="serviceGrid">{services.map(s=><article className="serviceCard" key={s.title}><div className="serviceImage"><img src={s.image} alt=""/></div><div className="serviceContent"><h3>{s.title}</h3><p>{s.text}</p><a href="#contacto">Conocer más <ArrowRight size={16}/></a></div></article>)}</div></div></section>
 
-    <section className="why"><div className="container whyGrid"><div className="whyVisual"><img src={hero} alt="Equipo tecnológico para tu empresa"/></div><div><span className="eyebrow">¿POR QUÉ JSG?</span><h2>Software con propósito, no tecnología por moda.</h2><p>Cada decisión técnica debe mejorar un proceso, reducir un riesgo o darle mejor información a tu equipo.</p><ul><li><Check/><div><strong>Comunicación directa</strong><span>Hablas con las personas que diseñan y construyen la solución.</span></div></li><li><Check/><div><strong>Experiencia en integraciones</strong><span>APIs, bancos, Zoho, Odoo, n8n y plataformas internas.</span></div></li><li><Check/><div><strong>Implementación responsable</strong><span>Pruebas, documentación y acompañamiento después de entregar.</span></div></li></ul></div></div></section>
+    <section className="why"><div className="container whyGrid"><div className="whyVisual"><img src={discovery} alt="Consultor de JSG escuchando las necesidades de una cliente"/></div><div><span className="eyebrow">¿POR QUÉ JSG?</span><h2>Software con propósito, no tecnología por moda.</h2><p>Cada decisión técnica debe mejorar un proceso, reducir un riesgo o darle mejor información a tu equipo.</p><ul><li><Check/><div><strong>Comunicación directa</strong><span>Hablas con las personas que diseñan y construyen la solución.</span></div></li><li><Check/><div><strong>Experiencia en integraciones</strong><span>APIs, bancos, Zoho, Odoo, n8n y plataformas internas.</span></div></li><li><Check/><div><strong>Implementación responsable</strong><span>Pruebas, documentación y acompañamiento después de entregar.</span></div></li></ul></div></div></section>
 
     <section id="proceso" className="section process"><div className="container"><div className="sectionTitle"><span className="eyebrow">CÓMO LO HACEMOS</span><h2>Un proceso claro de principio a fin</h2></div><div className="steps">{[['01','Conversemos','Entendemos tu operación, el problema y el resultado que buscas.'],['02','Diseñamos','Definimos alcance, solución, tiempo y costo antes de comenzar.'],['03','Construimos','Desarrollamos por etapas y compartimos avances contigo.'],['04','Acompañamos','Probamos, documentamos y damos soporte a la puesta en marcha.']].map(x=><article key={x[0]}><span>{x[0]}</span><h3>{x[1]}</h3><p>{x[2]}</p></article>)}</div></div></section>
 
